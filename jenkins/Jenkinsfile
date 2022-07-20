@@ -1,0 +1,33 @@
+pipeline{
+    agent any
+    stages{
+        stage("BUILD"){            
+            tools {
+            go 'golang 1.18.1'
+            }
+
+
+
+            steps{
+                echo "======== BUILDING MAIN GO APP ========"
+                sh "go build main.go"
+                echo "======== BUILDING REDIRECT GO APP ========"
+                sh "go build redirecthttp/redirect.go"
+            }
+        }
+
+        stage("DEPLOY EC2"){
+            steps{
+                sshagent(credentials: ['aws-tarlan-goresume-ec2']) {
+                    echo "======== DEPLOYING BINARIES ========"
+                    sh '''
+                        [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
+                        ssh-keyscan -t rsa,dsa ec2-3-121-225-232.eu-central-1.compute.amazonaws.com >> ~/.ssh/known_hosts
+                        tar cvzf - main redirect | ssh ubuntu@ec2-3-121-225-232.eu-central-1.compute.amazonaws.com "cd /http; tar xvzf -"
+                        ssh ubuntu@ec2-3-121-225-232.eu-central-1.compute.amazonaws.com "chmod +x main redirect; sudo systemctl start ilu"
+                    '''
+                }    
+            }
+        }
+    }
+}
