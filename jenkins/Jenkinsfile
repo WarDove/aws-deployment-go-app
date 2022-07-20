@@ -20,18 +20,16 @@ pipeline{
             steps{
                 sshagent(credentials: ['aws-tarlan-ohio-ubuntu-focal-public','aws-tarlan-ohio-ubuntu-focal-private']) {
                     echo "======== DEPLOYING BINARIES ========"
-                    sh '''
-                    
+                    sh '''                    
                         [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
                         
                         ssh-keyscan -t rsa,dsa ec2-3-145-168-159.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
                         
                         tar --exclude='./.*' --exclude='./jenkins' --exclude='go.*' -cvzf ./jenkins/artifact.tgz . 
                         
-                        scp ./jenkins/* !(Jenkinsfile) ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com:/tmp
+                        scp ./jenkins/* ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com:/tmp
                         
-                        ssh ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com "bash /tmp/bastion.sh" 
-                        
+                        ssh ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com "bash /tmp/bastion.sh"                        
                                                 
                     '''
                 }    
