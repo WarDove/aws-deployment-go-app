@@ -58,7 +58,7 @@ func main() {
 	http.Handle("/js/", fh)
 	http.Handle("/scss/", fh)
 
-	if err := http.ListenAndServeTLS(":443", "fullchain.pem", "privkey.pem", nil); err != nil {
+	if err := http.ListenAndServe(":80", nil); err != nil {
 		log.Fatalln(err)
 	}
 
