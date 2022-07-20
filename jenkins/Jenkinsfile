@@ -29,7 +29,7 @@ pipeline{
                         
                         scp ./jenkins/* ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com:/tmp                      
                                                                                                                 
-                        ssh ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com "bash /tmp/bastion.sh"                        
+                        ssh -A ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com "bash /tmp/bastion.sh"                        
                                                 
                     '''
                 }    
