@@ -24,7 +24,7 @@ pipeline{
                         [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
                         ssh-keyscan -t rsa,dsa ec2-3-145-168-159.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts  
                         
-                        tar --exclude='./idea' --exclude='./jenkins' --exclude='.gitignore' --exclude='go.*' -cvzf artifact.tgz .
+                        tar --exclude='./.*' --exclude='./jenkins' --exclude='go.*' -cvzf artifact.tgz .
                         
                         scp artifact.tgz ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com:/tmp
                         
