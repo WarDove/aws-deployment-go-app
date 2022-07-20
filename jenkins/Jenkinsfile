@@ -29,8 +29,16 @@ pipeline{
                         
                         scp ./jenkins/* ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com:/tmp                      
                                                                                                                 
-                        ssh -A ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com "bash /tmp/bastion.sh &" && exit
-                                                
+                        ssh -A ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com "rm ~/.ssh/known_hosts"
+                        
+                        for i in `seq 1 2 5`
+                          do  
+                            ssh -A ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com 'ssh-keyscan -t rsa,dsa 10.0.${i}.4 >> ~/.ssh/known_hosts'
+                            ssh -A ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com 'scp /tmp/artifact.tgz ubuntu@10.0.${i}.4:/tmp' 
+                            ssh -A ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com 'ssh ubuntu@10.0.${i}.4 "sudo killall main'
+                            ssh -A ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com 'ssh ubuntu@10.0.${i}.4 "tar xvzf /tmp/artifact.tgz --directory /home/ubuntu"'
+                            ssh -A ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com 'ssh ubuntu@10.0.${i}.4 "sudo ./main &" &'
+                          done              
                     '''
                 }    
             }
