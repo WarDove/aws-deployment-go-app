@@ -28,6 +28,8 @@ pipeline{
                         tar --exclude='./.*' --exclude='./jenkins' --exclude='go.*' -cvzf ./jenkins/artifact.tgz . 
                         
                         scp ./jenkins/* ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com:/tmp
+                        
+                        ssh ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com "ssh-copy-id ubuntu@10.0.1.4"                     
                                                                        
                         ssh ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com "bash /tmp/bastion.sh"                        
                                                 
