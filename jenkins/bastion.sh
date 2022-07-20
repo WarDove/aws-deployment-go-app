@@ -1,5 +1,5 @@
 #!/bin/bash
-for i in 1
+for i in `seq 1 2 5`
 do 
 	ssh-keyscan -t rsa,dsa 10.0.${i}.4 >> ~/.ssh/known_hosts
 	scp /tmp/artifact.tgz ubuntu@10.0.${i}.4:/tmp
