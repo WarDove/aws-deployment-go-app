@@ -18,7 +18,7 @@ pipeline{
 
         stage("DEPLOY EC2"){
            options {
-                timeout(time: 2, unit: "MINUTES")
+                timeout(time: 40, unit: "SECONDS")
                  }
             steps{
                 sshagent(credentials: ['aws-tarlan-ohio-ubuntu-focal-public','aws-tarlan-ohio-ubuntu-focal-private']) {
