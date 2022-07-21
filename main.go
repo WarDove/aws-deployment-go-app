@@ -21,11 +21,11 @@ func checkErr(err error) {
 }
 
 func Resume(w http.ResponseWriter, r *http.Request) {
-	if r.Host == "huseynov.net" || r.Host == "www.huseynov.net" {
-		tpl.ExecuteTemplate(w, "tarlan.gohtml", nil)
-	} else {
-		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
-	}
+	//if r.Host == "huseynov.net" || r.Host == "www.huseynov.net" {
+	//	tpl.ExecuteTemplate(w, "tarlan.gohtml", nil)
+	//} else {
+	//	http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+	//}
 
 	//} else if r.Host == "kamran.huseynov.net" || r.Host == "www.kamran.huseynov.net" {
 	//tpl.ExecuteTemplate(w, "kamran.gohtml", nil)
