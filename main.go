@@ -22,7 +22,7 @@ func checkErr(err error) {
 
 func Resume(w http.ResponseWriter, r *http.Request) {
 	//if r.Host == "huseynov.net" || r.Host == "www.huseynov.net" {
-	//	tpl.ExecuteTemplate(w, "tarlan.gohtml", nil)
+		tpl.ExecuteTemplate(w, "tarlan.gohtml", nil)
 	//} else {
 	//	http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 	//}
