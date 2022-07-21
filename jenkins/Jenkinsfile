@@ -26,13 +26,13 @@ pipeline{
                     sh '''                    
                         [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh
                         
-                        ssh-keyscan -t rsa,dsa ec2-3-145-168-159.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
+                        ssh-keyscan -t rsa,dsa ec2-3-129-209-178.us-east-2.compute.amazonaws.com >> ~/.ssh/known_hosts
                         
                         tar --exclude='./.*' --exclude='./jenkins' --exclude='go.*' -cvzf ./jenkins/artifact.tgz . 
                         
-                        scp ./jenkins/* ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com:/tmp                      
+                        scp ./jenkins/* ec2-3-129-209-178.us-east-2.compute.amazonaws.com:/tmp                      
                                                                                                                 
-                        exec ssh -A ubuntu@ec2-3-145-168-159.us-east-2.compute.amazonaws.com "bash /tmp/bastion.sh &"                       
+                        exec ssh -A ubuntu@ec2-3-129-209-178.us-east-2.compute.amazonaws.com "bash /tmp/bastion.sh &"                       
                                                 
                     '''
                 }    
